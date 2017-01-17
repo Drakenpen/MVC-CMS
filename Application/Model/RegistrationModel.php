@@ -15,28 +15,28 @@ class RegistrationModel
     }
 
 
-	public function registerNewUser()
+public function checkIfPostIsValid()
 
-		$Voornaam = $_POST['voornaam'];
-		$Voorvoegsel = $_POST['tussenvoegsel'];
-		$Achternaam = $_POST['achternaam'];
-		$Gebruikersnaam = $_POST['gebruikersnaam'];
-		$Email = $_POST['email'];
-		$Wachtwoord = $_POST['wachtwoord'];
-		$Herhaal_wachtwoord = $_POST['wachtwoord2'];
-		$Hash = md5($Wachtwoord);
+	$Voornaam = $_POST['voornaam'];
+	$Voorvoegsel = $_POST['tussenvoegsel'];
+	$Achternaam = $_POST['achternaam'];
+	$Gebruikersnaam = $_POST['gebruikersnaam'];
+	$Email = $_POST['email'];
+	$Wachtwoord = $_POST['wachtwoord'];
+	$Herhaal_wachtwoord = $_POST['wachtwoord2'];
+	$Hash = md5($Wachtwoord);
 
 if ( empty($_POST['voornaam']) || empty($_POST['achternaam']) || empty($_POST['gebruikersnaam']) || empty($_POST['email']) || empty($_POST['wachtwoord']) || empty($_POST['wachtwoord2'])) {
 	$_SESSION['errors'][] = 'Één van de velden of meer zijn niet ingevuld.';
-	header('location: ' . URL . 'register/index');
+	return false;
 	exit;
 }
 	
-public function validateNewPassword()
+public function checkNewPassword()
 {
 if ($Wachtwoord !== $Herhaal_wachtwoord) {
 	$_SESSION['errors'][] = 'Wachtwoorden komen niet overeen!';
-	header('location: ' . URL . 'register/index');
+	return false;
 	exit;
 }
 
@@ -44,30 +44,30 @@ if ( strlen( $Wachtwoord ) < 8 )
 	{
    	  	if ( preg_match( "/[^0,9]/", $Wachtwoord ) ) {
 			$_SESSION['errors'][] = 'Uw wachtwoord moet minimaal 8 tekens lang zijn';
-			header('location: ' . URL . 'register/index');
+			return false;
 			exit;
   		}
 	}
 }
 
-public function validateNewUsername()
+public function checkNewUsername()
 $sql = $db->prepare("SELECT * FROM members WHERE gebruikersnaam=?");
 if ($sql->execute(array($Gebruikersnaam)))
 	{
 		if ( $sql->rowCount() > 0 ) {
 			$_SESSION['errors'][] = 'De gebruikersnaam bestaat al!';
-			header('location: ' . URL . 'register/index');
+			return false;
 			exit;
 		}
 	}
 
-public function validateNewEmail()
+public function checkNewEmail()
 $query = $db->prepare("SELECT * FROM members WHERE email=?");
 if ($query->execute(array($Email)))
 	{
 		if ( $query->rowCount() > 0 ) {
 			$_SESSION['errors'][] = 'Deze emailadres is al in gebruik!';
-			header('location: ' . URL . 'register/index');
+			return false;
 			exit;
 		}
 	}
@@ -95,3 +95,7 @@ exit;
  }
 
 }
+
+/** if yes or no in Model  (return true/false;) 
+
+register has a check if yes = show x

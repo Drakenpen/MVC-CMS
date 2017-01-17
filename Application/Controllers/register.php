@@ -1,6 +1,6 @@
 <?php
 
-class RegisterController extends Controller
+class Register extends Controller
 {
     public function index()
     {
