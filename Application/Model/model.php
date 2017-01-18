@@ -126,4 +126,26 @@ class Model
         // fetch() is the PDO method that get exactly one result
         return $query->fetch()->amount_of_songs;
     }
+
+    /** Functional registration model here:
+    */
+
+    public function Register_Action($voornaam, $voorvoegsel, $achternaam, $email)
+    {
+        $sql = "INSERT INTO members (voornaam, voorvoegsel, achternaam, email) VALUES (:voornaam, :voorvoegsel, :achternaam, :email)";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':voornaam' => $voornaam, ':voorvoegsel' => $voorvoegsel, ':achternaam' => $achternaam, ':email' => $email);
+        $query->execute($parameters);
+    }
+
+    /** Broken egistration model here:
+    */
+    public function addUser($Voornaam, $Voorvoegsel, $Achternaam, $Email, $Wachtwoord, $Gebruikersnaam)
+    {
+        $sql = "INSERT INTO members (voornaam, voorvoegsel, achternaam, email, wachtwoord, gebruikersnaam) VALUES (:voornaam, :voorvoegsel, :achternaam, :email, :wachtwoord, :gebruikersnaam)";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':voornaam' => $voornaam, ':voorvoegsel' => $voorvoegsel, ':achternaam' => $achternaam, ':email' => $email, ':wachwoord' => $wachtwoord, ':gebruikersnaam' => $gebruikersnaam);
+        $query->execute($parameters);
+    }
+
 }

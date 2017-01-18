@@ -73,7 +73,7 @@ if ($query->execute(array($Email)))
 	}
 
 
-public function addNewUserToDatabase ($Voornaam, $Voorvoegsel, $Achternaam, $Email, $Hash, $Gebruikersnaam)
+public function register_action ($Voornaam, $Voorvoegsel, $Achternaam, $Email, $Hash, $Gebruikersnaam)
 $sth = $db->prepare("INSERT INTO members (voornaam, voorvoegsel, achternaam, email, wachtwoord, gebruikersnaam) VALUES (?, ?, ?, ?, ?, ?)");
 if ($sth->execute(array($Voornaam, $Voorvoegsel, $Achternaam, $Email, $Hash, $Gebruikersnaam)))
 {
