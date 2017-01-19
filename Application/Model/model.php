@@ -127,25 +127,45 @@ class Model
         return $query->fetch()->amount_of_songs;
     }
 
-    /** Functional registration model here:
+    /** Functional registration model here (simple version):
     */
 
-    public function Register_Action($voornaam, $voorvoegsel, $achternaam, $email)
+    public function registerNewUser()
     {
-        $sql = "INSERT INTO members (voornaam, voorvoegsel, achternaam, email) VALUES (:voornaam, :voorvoegsel, :achternaam, :email)";
-        $query = $this->db->prepare($sql);
-        $parameters = array(':voornaam' => $voornaam, ':voorvoegsel' => $voorvoegsel, ':achternaam' => $achternaam, ':email' => $email);
-        $query->execute($parameters);
-    }
+                 // clean the input 
+        $voornaam = $_POST['voornaam'];
+        $voorvoegsel = $_POST['voorvoegsel'];
+        $achternaam = $_POST['achternaam'];
+        $email = $_POST['email'];
+        $gebruikersnaam = $_POST['gebruikersnaam'];
+        $wachtwoord = $_POST['wachtwoord'];
+        $wachtwoord_hash = md5($wachtwoord);
+  
+         // write user data to database 
+         if ($this->addUsertoDB($voornaam, $voorvoegsel, $achternaam, $email, $gebruikersnaam, $wachtwoord)) { 
 
-    /** Broken egistration model here:
-    */
-    public function addUser($Voornaam, $Voorvoegsel, $Achternaam, $Email, $Wachtwoord, $Gebruikersnaam)
+            return false; 
+        } 
+
+
+ }
+
+    public function addUsertoDB($voornaam, $voorvoegsel, $achternaam, $email, $gebruikersnaam, $wachtwoord)
     {
-        $sql = "INSERT INTO members (voornaam, voorvoegsel, achternaam, email, wachtwoord, gebruikersnaam) VALUES (:voornaam, :voorvoegsel, :achternaam, :email, :wachtwoord, :gebruikersnaam)";
+        $sql = "INSERT INTO members (voornaam, voorvoegsel, achternaam, email, gebruikersnaam, wachtwoord) 
+                        VALUES (:voornaam, :voorvoegsel, :achternaam, :email, :gebruikersnaam, :wachtwoord)";
         $query = $this->db->prepare($sql);
-        $parameters = array(':voornaam' => $voornaam, ':voorvoegsel' => $voorvoegsel, ':achternaam' => $achternaam, ':email' => $email, ':wachwoord' => $wachtwoord, ':gebruikersnaam' => $gebruikersnaam);
-        $query->execute($parameters);
+        $query->execute (array(':voornaam' => $voornaam, 
+                               ':voorvoegsel' => $voorvoegsel, 
+                               ':achternaam' => $achternaam, 
+                               ':email' => $email, 
+                               ':gebruikersnaam' => $gebruikersnaam, 
+                               ':wachtwoord' => $wachtwoord));
+        $count = $query->rowCount();
+        if ($count==1){
+            return true;
+        }
+        return false;
     }
 
 }

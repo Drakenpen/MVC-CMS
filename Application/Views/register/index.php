@@ -1,5 +1,5 @@
 <div class="container">
-    <h2>You are in the View: application/view/song/index.php (everything in this box comes from that file)</h2>
+    <h2>You are in the View: application/view/register/index.php</h2>
         <div class="box">
         <form action="<?php echo URL; ?>register/register_action" method="POST">
         <div>
@@ -12,7 +12,7 @@
             <div>
                 <label>Achternaam:</label>
             </div><br>
-            <input type="text" name="voorvoegsel" placeholder="Placeholder" value="" /><br>
+            <input type="text" name="voorvoegsel" placeholder="Voorvoegsel" value="" /><br>
             <input type="text" name="achternaam" placeholder="Achternaam" value="" required />
         </div><br>
         <div>
@@ -25,7 +25,7 @@
             <div>
                 <label>Email:</label>
             </div><br>
-            <input type="text" name="email" placeholder="Email" value="" required />
+            <input type="email" name="email" placeholder="Email" value="" required />
         </div><br>
         <div>
             <div>
