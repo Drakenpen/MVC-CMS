@@ -132,35 +132,77 @@ class Model
 
     public function registerNewUser()
     {
-                 // clean the input 
+        // clean the input 
         $voornaam = $_POST['voornaam'];
         $voorvoegsel = $_POST['voorvoegsel'];
         $achternaam = $_POST['achternaam'];
         $email = $_POST['email'];
         $gebruikersnaam = $_POST['gebruikersnaam'];
         $wachtwoord = $_POST['wachtwoord'];
-        $wachtwoord_hash = md5($wachtwoord);
-  
-         // write user data to database 
-         if ($this->addUsertoDB($voornaam, $voorvoegsel, $achternaam, $email, $gebruikersnaam, $wachtwoord)) { 
+        $wachtwoord_hash = password_hash($wachtwoord, PASSWORD_DEFAULT);
 
+        //checks if the username already exists
+        if ($this->checkNewEmail($email)) { 
+            return false;
+            } 
+
+        //checks if the username already exists
+        if ($this->checkNewUsername($gebruikersnaam)) { 
+            return false;
+            } 
+
+        // write user data to database 
+        if ($this->addUsertoDB($voornaam, $voorvoegsel, $achternaam, $email, $gebruikersnaam, $wachtwoord_hash)) { 
+            return false; 
+            } 
+    }
+
+
+    public function checkNewEmail($email)
+    {
+        $query = $this->db->prepare("SELECT * FROM members WHERE email=?");
+        if ($query->execute(array($email))){
+            }
+        if ( $query->rowCount() > 0 ) {
+            return false;
+            exit;
+        }
+    }
+
+    public static function doesEmailAlreadyExist($email) 
+    { 
+  
+        $query = $this->db->prepare("SELECT id FROM members WHERE email = :email LIMIT 1"); 
+        $query->execute(array(':email' => $email)); 
+        if ($query->rowCount() == 0) { 
             return false; 
         } 
+        return true; 
+    } 
 
 
- }
-
-    public function addUsertoDB($voornaam, $voorvoegsel, $achternaam, $email, $gebruikersnaam, $wachtwoord)
+    public function checkNewUsername($gebruikersnaam)
     {
-        $sql = "INSERT INTO members (voornaam, voorvoegsel, achternaam, email, gebruikersnaam, wachtwoord) 
-                        VALUES (:voornaam, :voorvoegsel, :achternaam, :email, :gebruikersnaam, :wachtwoord)";
+        $query = $this->db->prepare("SELECT * FROM members WHERE gebruikersnaam=?");
+        if ($query->execute(array($gebruikersnaam))){
+            }
+        if ( $query->rowCount() > 0 ) {
+            return false;
+            exit;
+        }
+    }
+
+    public function addUsertoDB($voornaam, $voorvoegsel, $achternaam, $email, $gebruikersnaam, $wachtwoord_hash)
+    {
+        $sql = "INSERT INTO members (voornaam, voorvoegsel, achternaam, email, gebruikersnaam, wachtwoord_hash) 
+                        VALUES (:voornaam, :voorvoegsel, :achternaam, :email, :gebruikersnaam, :wachtwoord_hash)";
         $query = $this->db->prepare($sql);
         $query->execute (array(':voornaam' => $voornaam, 
                                ':voorvoegsel' => $voorvoegsel, 
                                ':achternaam' => $achternaam, 
                                ':email' => $email, 
                                ':gebruikersnaam' => $gebruikersnaam, 
-                               ':wachtwoord' => $wachtwoord));
+                               ':wachtwoord_hash' => $wachtwoord_hash));
         $count = $query->rowCount();
         if ($count==1){
             return true;
