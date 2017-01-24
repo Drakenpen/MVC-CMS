@@ -163,10 +163,11 @@ class Model
         $query = $this->db->prepare("SELECT * FROM members WHERE email=?");
         if ($query->execute(array($email))){
             }
-        if ( $query->rowCount() > 0 ) {
-            return false;
-            exit;
+        $count = $query->rowCount();
+        if ($count==1){
+            return true;
         }
+        return false;
     }
 
     public static function doesEmailAlreadyExist($email) 
@@ -174,11 +175,12 @@ class Model
   
         $query = $this->db->prepare("SELECT id FROM members WHERE email = :email LIMIT 1"); 
         $query->execute(array(':email' => $email)); 
-        if ($query->rowCount() == 0) { 
-            return false; 
-        } 
-        return true; 
-    } 
+        $count = $query->rowCount();
+        if ($count==1){
+            return true;
+        }
+        return false;
+    }
 
 
     public function checkNewUsername($gebruikersnaam)
@@ -186,10 +188,11 @@ class Model
         $query = $this->db->prepare("SELECT * FROM members WHERE gebruikersnaam=?");
         if ($query->execute(array($gebruikersnaam))){
             }
-        if ( $query->rowCount() > 0 ) {
-            return false;
-            exit;
+        $count = $query->rowCount();
+        if ($count==1){
+            return true;
         }
+        return false;
     }
 
     public function addUsertoDB($voornaam, $voorvoegsel, $achternaam, $email, $gebruikersnaam, $wachtwoord_hash)
