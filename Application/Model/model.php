@@ -127,12 +127,13 @@ class Model
         return $query->fetch()->amount_of_songs;
     }
 
-    /** Functional registration model here (simple version):
+
+    /** Functional registration model here:
     */
+
 
     public function registerNewUser()
     {
-        // clean the input 
         $voornaam = $_POST['voornaam'];
         $voorvoegsel = $_POST['voorvoegsel'];
         $achternaam = $_POST['achternaam'];
@@ -141,17 +142,14 @@ class Model
         $wachtwoord = $_POST['wachtwoord'];
         $wachtwoord_hash = password_hash($wachtwoord, PASSWORD_DEFAULT);
 
-        //checks if the username already exists
         if ($this->checkNewEmail($email)) { 
             return false;
             } 
 
-        //checks if the username already exists
         if ($this->checkNewUsername($gebruikersnaam)) { 
             return false;
             } 
 
-        // write user data to database 
         if ($this->addUsertoDB($voornaam, $voorvoegsel, $achternaam, $email, $gebruikersnaam, $wachtwoord_hash)) { 
             return false; 
             } 
@@ -195,6 +193,18 @@ class Model
         return false;
     }
 
+    public static function doesUsernamelAlreadyExist($gebruikersnaam) 
+    { 
+  
+        $query = $this->db->prepare("SELECT id FROM members WHERE gebruikersnaam = :gebruikersnaam LIMIT 1"); 
+        $query->execute(array(':gebruikersnaam' => $gebruikersnaam)); 
+        $count = $query->rowCount();
+        if ($count==1){
+            return true;
+        }
+        return false;
+    }
+
     public function addUsertoDB($voornaam, $voorvoegsel, $achternaam, $email, $gebruikersnaam, $wachtwoord_hash)
     {
         $sql = "INSERT INTO members (voornaam, voorvoegsel, achternaam, email, gebruikersnaam, wachtwoord_hash) 
@@ -214,3 +224,7 @@ class Model
     }
 
 }
+
+
+    /** Early login model here:
+    */

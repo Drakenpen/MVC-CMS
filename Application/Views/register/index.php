@@ -6,38 +6,41 @@
             <div>
                 <label>Voornaam:</label>
             </div><br>
-            <input type="text" name="voornaam" value="" placeholder="Voornaam" required />
-            <span class="error">*</span>
+                <input type="text" name="voornaam" value="" placeholder="Voornaam" required />
+                <span class="error">*</span>
         </div><br>
         <div>
             <div>
                 <label>Achternaam:</label>
             </div><br>
-            <input type="text" name="voorvoegsel" placeholder="Voorvoegsel" value="" /><br>
-            <input type="text" name="achternaam" placeholder="Achternaam" value="" required />
-            <span class="error">*</span>
+                <input type="text" name="voorvoegsel" placeholder="Voorvoegsel" value="" /><br>
+                <input type="text" name="achternaam" placeholder="Achternaam" value="" required />
+                <span class="error">*</span>
         </div><br>
         <div>
             <div>
                 <label>Gebruikersnaam:</label>
             </div><br>
-            <input type="text" name="gebruikersnaam" placeholder="Gebruikersnaam" value="" required />
-            <span class="error">*</span>
+                <input type="text" name="gebruikersnaam" placeholder="Gebruikersnaam" value="" required />
+                <span class="error">*</span>
         </div><br>        
         <div>
             <div>
                 <label>Email:</label>
             </div><br>
-            <input type="email" name="email" placeholder="Email" value="" required />
-            <span class="error">*</span>
+                <input type="email" name="email" placeholder="Email" value="" required />
+                <span class="error">*</span>
         </div><br>
         <div>
             <div>
                 <label>Wachtwoord:</label>
             </div><br>
-            <input type="password" name="wachtwoord" placeholder="**********" value="" required />
-            <span class="error">*</span>
+                <input type="password" name="wachtwoord" placeholder="**********" value="" required />
+                <span class="error">*</span>
         </div><br>
-            <input type="submit" name="submit_add_user" value="Submit" />
+            <div>
+                <input type="submit" name="submit_add_user" value="Submit" />
+            </div><br>
         </form>
+        </div>
     </div>

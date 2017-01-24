@@ -2,10 +2,7 @@
 
 class RegistrationModel
 {
-    /**
-     * @param object $db A PDO database connection
-     */
-    function __construct($db)
+	function __construct($db)
     {
         try {
             $this->db = $db;
@@ -14,88 +11,95 @@ class RegistrationModel
         }
     }
 
+    public function registerNewUser()
+    {
+        $voornaam = $_POST['voornaam'];
+        $voorvoegsel = $_POST['voorvoegsel'];
+        $achternaam = $_POST['achternaam'];
+        $email = $_POST['email'];
+        $gebruikersnaam = $_POST['gebruikersnaam'];
+        $wachtwoord = $_POST['wachtwoord'];
+        $wachtwoord_hash = password_hash($wachtwoord, PASSWORD_DEFAULT);
 
-public function checkIfPostIsValid()
+        if ($this->checkNewEmail($email)) { 
+            return false;
+            } 
 
-	$Voornaam = $_POST['voornaam'];
-	$Voorvoegsel = $_POST['tussenvoegsel'];
-	$Achternaam = $_POST['achternaam'];
-	$Gebruikersnaam = $_POST['gebruikersnaam'];
-	$Email = $_POST['email'];
-	$Wachtwoord = $_POST['wachtwoord'];
-	$Herhaal_wachtwoord = $_POST['wachtwoord2'];
-	$Hash = md5($Wachtwoord);
+        if ($this->checkNewUsername($gebruikersnaam)) { 
+            return false;
+            } 
 
-if ( empty($_POST['voornaam']) || empty($_POST['achternaam']) || empty($_POST['gebruikersnaam']) || empty($_POST['email']) || empty($_POST['wachtwoord']) || empty($_POST['wachtwoord2'])) {
-	$_SESSION['errors'][] = 'Één van de velden of meer zijn niet ingevuld.';
-	return false;
-	exit;
+        if ($this->addUsertoDB($voornaam, $voorvoegsel, $achternaam, $email, $gebruikersnaam, $wachtwoord_hash)) { 
+            return false; 
+            } 
+    }
+
+
+    public function checkNewEmail($email)
+    {
+        $query = $this->db->prepare("SELECT * FROM members WHERE email=?");
+        if ($query->execute(array($email))){
+            }
+        $count = $query->rowCount();
+        if ($count==1){
+            return true;
+        }
+        return false;
+    }
+
+    public static function doesEmailExist($email) 
+    { 
+  
+        $query = $this->db->prepare("SELECT id FROM members WHERE email = :email LIMIT 1"); 
+        $query->execute(array(':email' => $email)); 
+        $count = $query->rowCount();
+        if ($count==1){
+            return true;
+        }
+        return false;
+    }
+
+
+    public function checkNewUsername($gebruikersnaam)
+    {
+        $query = $this->db->prepare("SELECT * FROM members WHERE gebruikersnaam=?");
+        if ($query->execute(array($gebruikersnaam))){
+            }
+        $count = $query->rowCount();
+        if ($count==1){
+            return true;
+        }
+        return false;
+    }
+
+    public static function doesUsernameExist($gebruikersnaam) 
+    { 
+  
+        $query = $this->db->prepare("SELECT id FROM members WHERE gebruikersnaam = :gebruikersnaam LIMIT 1"); 
+        $query->execute(array(':gebruikersnaam' => $gebruikersnaam)); 
+        $count = $query->rowCount();
+        if ($count==1){
+            return true;
+        }
+        return false;
+    }
+
+    public function addUsertoDB($voornaam, $voorvoegsel, $achternaam, $email, $gebruikersnaam, $wachtwoord_hash)
+    {
+        $sql = "INSERT INTO members (voornaam, voorvoegsel, achternaam, email, gebruikersnaam, wachtwoord_hash) 
+                        VALUES (:voornaam, :voorvoegsel, :achternaam, :email, :gebruikersnaam, :wachtwoord_hash)";
+        $query = $this->db->prepare($sql);
+        $query->execute (array(':voornaam' => $voornaam, 
+                               ':voorvoegsel' => $voorvoegsel, 
+                               ':achternaam' => $achternaam, 
+                               ':email' => $email, 
+                               ':gebruikersnaam' => $gebruikersnaam, 
+                               ':wachtwoord_hash' => $wachtwoord_hash));
+        $count = $query->rowCount();
+        if ($count==1){
+            return true;
+        }
+        return false;
+    }
+
 }
-	
-public function checkNewPassword()
-{
-if ($Wachtwoord !== $Herhaal_wachtwoord) {
-	$_SESSION['errors'][] = 'Wachtwoorden komen niet overeen!';
-	return false;
-	exit;
-}
-
-if ( strlen( $Wachtwoord ) < 8 ) 
-	{
-   	  	if ( preg_match( "/[^0,9]/", $Wachtwoord ) ) {
-			$_SESSION['errors'][] = 'Uw wachtwoord moet minimaal 8 tekens lang zijn';
-			return false;
-			exit;
-  		}
-	}
-}
-
-public function checkNewUsername()
-$sql = $db->prepare("SELECT * FROM members WHERE gebruikersnaam=?");
-if ($sql->execute(array($Gebruikersnaam)))
-	{
-		if ( $sql->rowCount() > 0 ) {
-			$_SESSION['errors'][] = 'De gebruikersnaam bestaat al!';
-			return false;
-			exit;
-		}
-	}
-
-public function checkNewEmail()
-$query = $db->prepare("SELECT * FROM members WHERE email=?");
-if ($query->execute(array($Email)))
-	{
-		if ( $query->rowCount() > 0 ) {
-			$_SESSION['errors'][] = 'Deze emailadres is al in gebruik!';
-			return false;
-			exit;
-		}
-	}
-
-
-public function register_action ($Voornaam, $Voorvoegsel, $Achternaam, $Email, $Hash, $Gebruikersnaam)
-$sth = $db->prepare("INSERT INTO members (voornaam, voorvoegsel, achternaam, email, wachtwoord, gebruikersnaam) VALUES (?, ?, ?, ?, ?, ?)");
-if ($sth->execute(array($Voornaam, $Voorvoegsel, $Achternaam, $Email, $Hash, $Gebruikersnaam)))
-{
-	$_SESSION['errors'][] = 'De ingevoerde gegevens zijn opgeslagen in de database..';
-	header('location: ' . URL . 'login/index');
-	exit;
-}
-else
-{
-	$_SESSION['errors'][] = 'Er is iets fout gegaan. Probeer het later nog eens.';
-	header('location: ' . URL . 'register/index');
-	exit;
-}
-
-$_SESSION['errors'][] = 'De ingevoerde gegevens zijn opgeslagen in de database, maar nog niet gevarieerd.';
-header('location: ' . URL . 'login/index');
-exit;
-
- }
-
-}
-
-/** if yes or no in Model  (return true/false;) 
-
-register has a check if yes = show x
