@@ -19,8 +19,8 @@
     <!-- navigation -->
     <div class="navigation">
         <a href="<?php echo URL; ?>">home</a>
-        <a href="<?php echo URL; ?>home/exampleone">subpage</a>
         <a href="<?php echo URL; ?>login">Login</a>
         <a href="<?php echo URL; ?>register">Register</a>
         <a href="<?php echo URL; ?>songs">songs</a>
+        <a href="<?php echo URL; ?>home/exampleone">About</a>
     </div>

@@ -127,10 +127,8 @@ class Model
         return $query->fetch()->amount_of_songs;
     }
 
-
-    /** Functional registration model here:
+    /** Functional registration model now in RegistrationModel.php
     */
-
 
     public function registerNewUser()
     {
@@ -168,7 +166,7 @@ class Model
         return false;
     }
 
-    public static function doesEmailAlreadyExist($email) 
+    public static function doesEmailExist($email) 
     { 
   
         $query = $this->db->prepare("SELECT id FROM members WHERE email = :email LIMIT 1"); 
@@ -193,7 +191,7 @@ class Model
         return false;
     }
 
-    public static function doesUsernamelAlreadyExist($gebruikersnaam) 
+    public static function doesUsernameExist($gebruikersnaam) 
     { 
   
         $query = $this->db->prepare("SELECT id FROM members WHERE gebruikersnaam = :gebruikersnaam LIMIT 1"); 
@@ -223,8 +221,51 @@ class Model
         return false;
     }
 
+    /** Early login model now in LoginModel.php
+    */
+/*\  public function checkUser()
+    {
+        $email = $_POST['email'];
+        $wachtwoord = $_POST['wachtwoord'];
+        $wachtwoord_hash = password_hash($wachtwoord, PASSWORD_DEFAULT); 
+
+        if ($this->confirmUser($email, $wachtwoord_hash)) { 
+            return false; 
+            }  
+    }
+*/
+    public function IsLoggedInSession()
+    {
+        if (isset($_SESSION['userId'])==false || empty($_SESSION['userId']) ) {
+            return 0;
+        }
+        else
+        {
+            return 1;
+        }
+    }
+
+    public function checkUser($email, $wachtwoord_hash)
+    {
+        $email = $_POST['email'];
+        $wachtwoord = $_POST['wachtwoord'];
+        $wachtwoord_hash = password_hash($wachtwoord, PASSWORD_DEFAULT); 
+
+        $sql = "SELECT id, gebruikersnaam, email FROM members where email=? AND wachtwoord=? AND active=1 ;";
+        $query = $this->db->prepare($sql);
+        $query->execute(array($email, $wachtwoord_hash));
+        $count = $query->rowCount();
+        if ($count==1)
+        {
+            $_SESSION['userId'] = $row['id'];
+            $_SESSION['userEmail'] = $row['email'];
+            $_SESSION['displayName'] = $row['gebruikersnaam'];
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 }
 
-
-    /** Early login model here:
-    */

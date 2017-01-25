@@ -1,5 +1,5 @@
 <div class="container">
-    <h2>You are in the View: application/view/login/index.php (everything in this box comes from that file)</h2>
+    <h2>You are in the View: application/view/login/index.php</h2>
     <div class="box">
         <h3>Log in</h3>
         <form action="<?php echo URL; ?>login/login_action" method="POST">

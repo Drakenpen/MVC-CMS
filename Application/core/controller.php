@@ -20,6 +20,7 @@ class Controller
         $this->openDatabaseConnection();
         $this->loadModel();
         $this->loadRegistrationModel();
+        $this->loadLoginModel();
     }
 
     /**
@@ -52,6 +53,13 @@ class Controller
     public function loadRegistrationModel()
     {
         require APP . 'Model/RegistrationModel.php';
+        // create new "model" (and pass the database connection)
+        $this->model = new Model($this->db);
+    }
+    
+    public function loadLoginModel()
+    {
+        require APP . 'Model/LoginModel.php';
         // create new "model" (and pass the database connection)
         $this->model = new Model($this->db);
     }
