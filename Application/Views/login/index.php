@@ -7,14 +7,14 @@
                 <div>
                     <label>Email</label>
                     <div>
-                        <input type="email" class="form-control" id="email" name="email"  placeholder="Enter email" required>
+                        <input type="email" class="form-control" id="email" name="email"  placeholder="Email" required>
                     </div>
                 </div>
                 <br>
                 <div>
                     <label>Wachtwoord</label>
                     <div>
-                        <input type="password" class="form-control" id="wachtwoord" name="wachtwoord" placeholder="Enter password">
+                        <input type="password" class="form-control" id="wachtwoord" name="wachtwoord" placeholder="**********">
                     </div>
                 </div>
                 <br>

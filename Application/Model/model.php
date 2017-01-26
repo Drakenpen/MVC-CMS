@@ -223,18 +223,13 @@ class Model
 
     /** Early login model now in LoginModel.php
     */
-/*\  public function checkUser()
+    
+    public function open_Session()
     {
-        $email = $_POST['email'];
-        $wachtwoord = $_POST['wachtwoord'];
-        $wachtwoord_hash = password_hash($wachtwoord, PASSWORD_DEFAULT); 
-
-        if ($this->confirmUser($email, $wachtwoord_hash)) { 
-            return false; 
-            }  
+        session_start();
     }
-*/
-    public function IsLoggedInSession()
+
+    public function isLoggedInSession()
     {
         if (isset($_SESSION['userId'])==false || empty($_SESSION['userId']) ) {
             return 0;
@@ -245,25 +240,38 @@ class Model
         }
     }
 
-    public function checkUser($email, $wachtwoord_hash)
+
+    public function checkUser()
     {
         $email = $_POST['email'];
         $wachtwoord = $_POST['wachtwoord'];
         $wachtwoord_hash = password_hash($wachtwoord, PASSWORD_DEFAULT); 
 
-        $sql = "SELECT id, gebruikersnaam, email FROM members where email=? AND wachtwoord=? AND active=1 ;";
+        if ($this->getUserFromDB($email, $wachtwoord_hash)) { 
+            return false; 
+            }
+    } 
+
+    public function getUserFromDB($email, $wachtwoord_hash)
+    {
+        $email = $_POST['email'];
+        $wachtwoord = $_POST['wachtwoord'];
+        $wachtwoord_hash = password_hash($wachtwoord, PASSWORD_DEFAULT); 
+
+        $sql = "SELECT id, gebruikersnaam, email FROM members 
+                WHERE email = :email AND wachtwoord_hash = :wachtwoord_hash AND active=1 ;";
         $query = $this->db->prepare($sql);
-        $query->execute(array($email, $wachtwoord_hash));
-        $count = $query->rowCount();
-        if ($count==1)
-        {
-            $_SESSION['userId'] = $row['id'];
-            $_SESSION['userEmail'] = $row['email'];
-            $_SESSION['displayName'] = $row['gebruikersnaam'];
+        $query->execute(array(':email' => $email, 
+                              ':wachtwoord_hash' => $wachtwoord_hash));
+        $count = $query->rowCount();    
+        if ($count == 1) {
+                $_SESSION['userId'] = $row['id'];
+                $_SESSION['userEmail'] = $row['email'];
+                $_SESSION['displayName'] = $row['gebruikersnaam'];
         }
         else
         {
-            return false;
+            $_SESSION['errors'][] = "Combinatie van gebruikersnaam en wachtwoord niet gevonden";
         }
     }
 

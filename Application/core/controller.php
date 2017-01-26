@@ -12,6 +12,7 @@ class Controller
      */
     public $model = null;
 
+
     /**
      * Whenever controller is created, open a database connection too and load "the model".
      */
@@ -19,8 +20,7 @@ class Controller
     {
         $this->openDatabaseConnection();
         $this->loadModel();
-        $this->loadRegistrationModel();
-        $this->loadLoginModel();
+        $this->Session();
     }
 
     /**
@@ -63,4 +63,10 @@ class Controller
         // create new "model" (and pass the database connection)
         $this->model = new Model($this->db);
     }
+
+    public function Session()
+    {
+        session_start();
+    }
+
 }

@@ -1,5 +1,4 @@
 <?php
-
 class Login extends Controller
 {
     public function index()
@@ -18,13 +17,24 @@ class Login extends Controller
     	}
     }
 
-/** placeholder */
+ /**placeholder */ 
     public function Login_Action()
     {
         if (empty($_SESSION['errors'])) {
             $this->model->checkUser();
     	}
-     	header('location: ' . URL . 'login/index');
+     	//header('location: ' . URL . 'home/index');
     }
+
+/** test function 
+    public function Login_Action()
+    {
+        if (isset($_POST["submit_login"])) {
+            $this->model->checkUser();
+    	}
+     	header('location: ' . URL . 'home/index');
+    }
+*/
+
 
  }

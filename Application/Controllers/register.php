@@ -1,5 +1,4 @@
 <?php
-
 class Register extends Controller
 {
     public function index()
@@ -15,7 +14,7 @@ class Register extends Controller
         if (isset($_POST["submit_add_user"])) {
             $this->model->registerNewUser();
     	}
-     	header('location: ' . URL . 'register/index');
+     	header('location: ' . URL . 'login/index');
     }
 
 
