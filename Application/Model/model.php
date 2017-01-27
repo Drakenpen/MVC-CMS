@@ -127,7 +127,7 @@ class Model
         return $query->fetch()->amount_of_songs;
     }
 
-    /** Functional registration model now in RegistrationModel.php
+    /** Functional registration model
     */
 
     public function registerNewUser()
@@ -221,13 +221,8 @@ class Model
         return false;
     }
 
-    /** Early login model now in LoginModel.php
+    /** Early login model
     */
-    
-    public function open_Session()
-    {
-        session_start();
-    }
 
     public function isLoggedInSession()
     {
@@ -266,8 +261,8 @@ class Model
         $count = $query->rowCount();    
         if ($count == 1) {
                 $_SESSION['userId'] = $row['id'];
-                $_SESSION['userEmail'] = $row['email'];
                 $_SESSION['displayName'] = $row['gebruikersnaam'];
+                $_SESSION['userEmail'] = $row['email'];
         }
         else
         {

@@ -1,4 +1,6 @@
 <?php
+	session_start();
+
 class Register extends Controller
 {
     public function index()
@@ -8,14 +10,13 @@ class Register extends Controller
         require APP . 'Views/_templates/footer.php';
     }
 
-/** werkt */
+/** werkt soort van */
     public function Register_Action()
     {
-        if (isset($_POST["submit_add_user"])) {
-            $this->model->registerNewUser();
-    	}
-     	header('location: ' . URL . 'login/index');
-    }
+    	$this->model->registerNewUser();
 
+ 		header('location: ' . URL . 'login/index');
+    	 
+    }
 
  }

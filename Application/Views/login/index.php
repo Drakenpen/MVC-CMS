@@ -7,7 +7,7 @@
                 <div>
                     <label>Email</label>
                     <div>
-                        <input type="email" class="form-control" id="email" name="email"  placeholder="Email" required>
+                        <input type="email" class="form-control" id="email" name="email"  placeholder="Email" >
                     </div>
                 </div>
                 <br>
