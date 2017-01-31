@@ -224,6 +224,11 @@ class Model
     /** Early login model
     */
 
+    public static function logout()
+    {
+        session_destroy();
+    }
+
     public function isLoggedInSession()
     {
         if (isset($_SESSION['userId'])==false || empty($_SESSION['userId']) ) {
