@@ -138,7 +138,8 @@ class Model
         $email = $_POST['email'];
         $gebruikersnaam = $_POST['gebruikersnaam'];
         $wachtwoord = $_POST['wachtwoord'];
-        $wachtwoord_hash = password_hash($wachtwoord, PASSWORD_DEFAULT);
+        //$wachtwoord_hash = password_hash($wachtwoord, PASSWORD_DEFAULT);
+        $wachtwoord_hash = md5($wachtwoord);
 
         if ($this->checkNewEmail($email)) { 
             return false;
@@ -231,7 +232,7 @@ class Model
 
     public function isLoggedInSession()
     {
-        if (isset($_SESSION['userId'])==false || empty($_SESSION['userId']) ) {
+        if (isset($_SESSION['Id'])==false || empty($_SESSION['Id']) ) {
             return 0;
         }
         else
@@ -242,32 +243,33 @@ class Model
 
 
     public function checkUser()
-    {
+    {      
         $email = $_POST['email'];
         $wachtwoord = $_POST['wachtwoord'];
         $wachtwoord_hash = password_hash($wachtwoord, PASSWORD_DEFAULT); 
+      //  $wachtwoord_verified = password_verify($wachtwoord, $wachtwoord_hash);
+        $wachtwoord_verified = md5($wachtwoord);
 
-        if ($this->getUserFromDB($email, $wachtwoord_hash)) { 
+        if ($this->getUserFromDB($email, $wachtwoord_verified)) { 
             return false; 
             }
     } 
 
-    public function getUserFromDB($email, $wachtwoord_hash)
+    public function getUserFromDB($email, $wachtwoord_verified)
     {
-        $email = $_POST['email'];
-        $wachtwoord = $_POST['wachtwoord'];
-        $wachtwoord_hash = password_hash($wachtwoord, PASSWORD_DEFAULT); 
-
         $sql = "SELECT id, gebruikersnaam, email FROM members 
                 WHERE email = :email AND wachtwoord_hash = :wachtwoord_hash AND active=1 ;";
         $query = $this->db->prepare($sql);
         $query->execute(array(':email' => $email, 
-                              ':wachtwoord_hash' => $wachtwoord_hash));
-        $count = $query->rowCount();    
+                              ':wachtwoord_hash' => $wachtwoord_verified));
+        //echo $email;
+        //echo $wachtwoord_verified;
+        $count = $query->rowCount();
+        $row = $query->fetch(PDO::FETCH_ASSOC);
         if ($count == 1) {
-                $_SESSION['userId'] = $row['id'];
-                $_SESSION['displayName'] = $row['gebruikersnaam'];
-                $_SESSION['userEmail'] = $row['email'];
+                $_SESSION['Id'] = $row['id'];
+                $_SESSION['Gebruikersnaam'] = $row['gebruikersnaam'];
+                $_SESSION['Email'] = $row['email'];
         }
         else
         {

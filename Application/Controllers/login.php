@@ -1,6 +1,7 @@
 <?php
-    session_start();
-    print_r($_SESSION);
+
+   // print_r($_SESSION);
+
 
 class Login extends Controller
 {
@@ -31,6 +32,9 @@ class Login extends Controller
 
     public function Login_Action()
     {
+    	
+
+    	$_SESSION['errors']= [];
 		// redirect back to login with error if user didn't enter email
 		if ( empty($_POST['email']) ) {
 			$_SESSION['errors'][] = 'Fout: Geen e-mail ingevuld.';
@@ -42,7 +46,16 @@ class Login extends Controller
 		}
 
 		// check if user can be found
-		if (empty($_SESSION['errors'])) $result = CheckUser($_POST['email'], $_POST['wachtwoord']);
+		if (empty($_SESSION['errors'])) $result = $this->model->checkUser($_POST['email'], $_POST['wachtwoord']);
+
+		header('location: ' . URL . 'login/index');
+    }
+
+    public function logout()
+    {
+    	$this->model->logout();
+
+    	header('location: ' . URL . 'home/index');
     }
 
 
