@@ -3,7 +3,8 @@ class Register extends Controller
 {
     public function index()
     {
-	if ( $this->model->IsLoggedInSession()==true ) 
+        $_SESSION['errors']= [];
+	    if ( $this->model->IsLoggedInSession()==true ) 
 		{
 		// stuur direct door naar main pagina
 	    $_SESSION['errors'][] = "U bent al ingelogd!";

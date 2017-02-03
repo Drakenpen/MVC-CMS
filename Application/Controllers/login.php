@@ -1,13 +1,11 @@
 <?php
 
-   // print_r($_SESSION);
-
-
 class Login extends Controller
 {
     public function index()
     {
-	if ( $this->model->IsLoggedInSession()==true ) 
+    	$_SESSION['errors']= [];
+		if ( $this->model->IsLoggedInSession()==true ) 
 		{
 		// stuur direct door naar main pagina
 	    $_SESSION['errors'][] = "U bent al ingelogd!";
@@ -32,8 +30,6 @@ class Login extends Controller
 
     public function Login_Action()
     {
-    	
-
     	$_SESSION['errors']= [];
 		// redirect back to login with error if user didn't enter email
 		if ( empty($_POST['email']) ) {

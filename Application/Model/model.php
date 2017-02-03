@@ -222,7 +222,10 @@ class Model
         return false;
     }
 
-    /** Early login model
+    /** End login model
+    */
+
+    /** Functional login model
     */
 
     public static function logout()
@@ -275,6 +278,54 @@ class Model
         {
             $_SESSION['errors'][] = "Combinatie van gebruikersnaam en wachtwoord niet gevonden";
         }
+    }
+
+    /** End login model
+    */
+
+    /** Early activity model
+    */
+
+    public function loadEvents()
+    {
+        $sql = "SELECT * FROM events ORDER BY id ASC";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+
+        return $query->fetchAll();
+    }
+
+    public function getActivity()
+    {
+
+     $id = $_GET['id'];
+
+    $sth = $this->db->prepare("SELECT * FROM events WHERE id=? ORDER BY id ASC");
+    // controleer of er een foutmelding is ontstaan en zo ja, plaats die dan in $_SESSION['errors'][] = $msg
+
+    if ($sth->execute(array($id)))
+    {
+        $events = $sth->fetchAll(PDO::FETCH_ASSOC); 
+        if ( $sth->rowCount() == 0 ) $_SESSION['errors'][] = 'Kan event met id '. $id .' niet vinden';
+        if ( $sth->rowCount() > 1 ) $_SESSION['errors'][] = 'Je haalt teveel rijen op';
+    }
+    else
+    {
+        $_SESSION['errors'][] = 'Het is niet gelukt om de gegevens op te halen.';
+    }
+
+    $userid = $_SESSION['Id']; 
+    $sth = $this->db->prepare("SELECT activities.id as id, activities.event_id, activities.title, activities.banner_url, activities.description,
+    ( select count(ma.activity_id) as aantal
+      from members_activities ma 
+      where ma.member_id = ? 
+      and ma.activity_id = activities.id  
+    ) as ingeschreven
+    FROM activities
+    WHERE activities.event_id = ?");
+    $sth->execute(array($userid, $id));
+    /* Fetch all of the remaining rows in the result set */
+    $activities = $sth->fetchAll(PDO::FETCH_ASSOC); 
     }
 
 }

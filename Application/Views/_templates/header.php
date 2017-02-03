@@ -23,7 +23,7 @@
         <a href="<?php echo URL; ?>login">Login</a>
         <a href="<?php echo URL; ?>register">Register</a>
     <?php if ( $this->model->IsLoggedInSession()) : ?>
-            <a href="<?php echo URL; ?>">Account</a>
+            <a href="<?php echo URL; ?>events">Events</a>
             <a href="<?php echo URL; ?>login/logout">Logout</a>
     <?php endif; ?>
     </div>
