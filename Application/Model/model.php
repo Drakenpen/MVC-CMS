@@ -295,37 +295,36 @@ class Model
         return $query->fetchAll();
     }
 
-    public function getActivity()
+    public function selectEvent()
     {
+        $id = $_GET['id'];
 
-     $id = $_GET['id'];
+        $sql = "SELECT * FROM events WHERE id=? ORDER BY id ASC";
+        $query = $this->db->prepare($sql);
+        $query->execute(array($id));
 
-    $sth = $this->db->prepare("SELECT * FROM events WHERE id=? ORDER BY id ASC");
-    // controleer of er een foutmelding is ontstaan en zo ja, plaats die dan in $_SESSION['errors'][] = $msg
-
-    if ($sth->execute(array($id)))
-    {
-        $events = $sth->fetchAll(PDO::FETCH_ASSOC); 
-        if ( $sth->rowCount() == 0 ) $_SESSION['errors'][] = 'Kan event met id '. $id .' niet vinden';
-        if ( $sth->rowCount() > 1 ) $_SESSION['errors'][] = 'Je haalt teveel rijen op';
-    }
-    else
-    {
-        $_SESSION['errors'][] = 'Het is niet gelukt om de gegevens op te halen.';
+        return $query->fetchAll();
     }
 
+
+    public function loadEventActivities()
+    {
+
+    $id = $_GET['id'];
     $userid = $_SESSION['Id']; 
-    $sth = $this->db->prepare("SELECT activities.id as id, activities.event_id, activities.title, activities.banner_url, activities.description,
-    ( select count(ma.activity_id) as aantal
-      from members_activities ma 
-      where ma.member_id = ? 
-      and ma.activity_id = activities.id  
-    ) as ingeschreven
+
+    $sql = "SELECT activities.id AS id, activities.event_id, activities.title, activities.banner_url, activities.description,
+    ( SELECT count(ma.activity_id) AS aantal
+      FROM members_activities ma 
+      WHERE ma.member_id = ? 
+      AND ma.activity_id = activities.id  
+    ) AS ingeschreven
     FROM activities
-    WHERE activities.event_id = ?");
-    $sth->execute(array($userid, $id));
-    /* Fetch all of the remaining rows in the result set */
-    $activities = $sth->fetchAll(PDO::FETCH_ASSOC); 
+    WHERE activities.event_id = ?";
+    $query = $this->db->prepare($sql);
+    $query->execute(array($userid, $id));
+
+    return $query->fetchAll();
     }
 
 }

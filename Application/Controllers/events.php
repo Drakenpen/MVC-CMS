@@ -21,14 +21,14 @@ class events extends Controller
     	}
     }
 
-    public function event_activities()
+    public function activities()
     {
-	        $activities = $this->model->getActivity();
-	        $events = $this->model->loadEvents();
+            $events = $this->model->selectEvent();
+            $activities = $this->model->loadEventActivities();
 
-        	require APP . 'Views/_templates/header.php';
-        	require APP . 'Views/events/event_activities.php';
-        	require APP . 'Views/_templates/footer.php';
-    	
+            require APP . 'Views/_templates/header.php';
+            require APP . 'Views/events/activities.php';
+            require APP . 'Views/_templates/footer.php';
     }
+
 }

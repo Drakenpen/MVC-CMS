@@ -3,8 +3,8 @@
 
     <?php foreach ($events as $event) { ?>
 	    <div class="box">
-	    	<?php if (isset($event->title)) { ?>
-	    	<a href="<?php echo htmlspecialchars($event->title, ENT_QUOTES, 'UTF-8'); ?>">
+	    	<?php if (isset($event->id)) { ?>
+	    	<a href="<?php echo URL; ?>events/activities?id=<?php echo ($event->id); ?>">
 	    	<?php } ?>
 		    	<div class="img" style='background-image:url(<?php if (isset($event->small_banner_url)) echo ($event->small_banner_url); ?>)'>
 		            <div class="img2"'>
