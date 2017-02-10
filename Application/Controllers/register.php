@@ -24,7 +24,7 @@ class Register extends Controller
     	$this->model->registerNewUser();
 
  		header('location: ' . URL . 'login/index');
-    	 
+   	 
     }
 
  }

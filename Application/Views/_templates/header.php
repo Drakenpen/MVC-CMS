@@ -25,6 +25,7 @@
     <?php if ( $this->model->IsLoggedInSession()) : ?>
             <a href="<?php echo URL; ?>events">Events</a>
             <a href="<?php echo URL; ?>login/logout">Logout</a>
+            <a> Logged in as: <?php echo $_SESSION['Gebruikersnaam']; ?> </a>
     <?php endif; ?>
     </div>
 

@@ -31,4 +31,11 @@ class events extends Controller
             require APP . 'Views/_templates/footer.php';
     }
 
+    public function Select_Activity()
+    {
+         $this->model->selectActivity();
+
+        header('location: ' . URL . 'home/index');
+    }
+
 }

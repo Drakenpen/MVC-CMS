@@ -283,7 +283,7 @@ class Model
     /** End login model
     */
 
-    /** Early activity model
+    /** Event model
     */
 
     public function loadEvents()
@@ -309,23 +309,39 @@ class Model
 
     public function loadEventActivities()
     {
+        $id = $_GET['id'];
+        $userid = $_SESSION['Id']; 
 
-    $id = $_GET['id'];
-    $userid = $_SESSION['Id']; 
+        $sql = "SELECT activities.id AS id, activities.event_id, activities.title, activities.banner_url, 
+                activities.description,  
+                (SELECT count(ma.activity_id) AS aantal 
+                FROM members_activities ma WHERE ma.member_id = ? 
+                AND ma.activity_id = activities.id) AS ingeschreven 
+                FROM activities
+                WHERE activities.event_id = ?";
+        $query = $this->db->prepare($sql);
+        $query->execute(array($userid, $id));
 
-    $sql = "SELECT activities.id AS id, activities.event_id, activities.title, activities.banner_url, activities.description,
-    ( SELECT count(ma.activity_id) AS aantal
-      FROM members_activities ma 
-      WHERE ma.member_id = ? 
-      AND ma.activity_id = activities.id  
-    ) AS ingeschreven
-    FROM activities
-    WHERE activities.event_id = ?";
-    $query = $this->db->prepare($sql);
-    $query->execute(array($userid, $id));
-
-    return $query->fetchAll();
+        return $query->fetchAll();
     }
 
+    public function selectActivity()
+    {
+        $activity_id = $_POST['activity_id'];
+        $user_id = $_POST['user_id'];
+
+
+        $sql = "DELETE FROM members_activities WHERE activity_id=? AND member_id=?";
+        $query = $this->db->prepare($sql);
+
+        $query->execute(array($activity_id, $user_id));
+        
+        $sql = "INSERT INTO members_activities (activity_id, member_id) VALUES (?, ?)";
+        $query = $this->db->prepare($sql);
+        $query->execute(array($activity_id, $user_id));
+    }
+
+    /** End event model
+    */
 }
 

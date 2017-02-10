@@ -1,5 +1,5 @@
     <div class="footer">
-        Find me on GitHub: <a href="https://github.com/drakenpen">Drakenpen</a>.
+        <a>Find me on GitHub: <a href="https://github.com/drakenpen">Drakenpen</a>.
     </div>
 
     <!-- jQuery, loaded in the recommended protocol-less way -->
