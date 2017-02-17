@@ -1,7 +1,6 @@
 <div class="container">
-
+    <h3>Log in</h3>
     <div class="box">
-        <h3>Log in</h3>
         <form action="<?php echo URL; ?>login/login_action" method="POST">
             <div>
                 <div>

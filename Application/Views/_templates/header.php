@@ -24,7 +24,7 @@
     <?php if ( $this->model->IsLoggedInSession()) : ?>
             <a href="<?php echo URL; ?>events">Events</a>
     <?php if ( $this->model->isAdmin()) : ?>
-            <a href="<?php echo URL; ?>events/edit">Edit</a>
+            <a href="<?php echo URL; ?>events/admin">Edit</a>
     <?php endif; ?>
             <a href="<?php echo URL; ?>login/logout">Logout</a>
     <?php endif; ?>

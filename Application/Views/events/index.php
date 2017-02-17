@@ -1,7 +1,7 @@
 <div class="container">
 
 		<div class="img" style='background-image'>
-			<p>Kies een event om een activiteit te selecteren!</p>
+			<h3>Kies een event om een activiteit te selecteren</h3>
         </div>  
 
     <?php foreach ($events as $event) { ?>
