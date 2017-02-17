@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>MINI</title>
+    <title>CMS</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -19,13 +19,14 @@
     <!-- navigation -->
 
     <div class="navigation">
-        <a href="<?php echo URL; ?>">home</a>
-        <a href="<?php echo URL; ?>login">Login</a>
-        <a href="<?php echo URL; ?>register">Register</a>
+        <a href="<?php echo URL; ?>">Home</a>
+        <a href="<?php echo URL; ?>home/about">About</a>
     <?php if ( $this->model->IsLoggedInSession()) : ?>
             <a href="<?php echo URL; ?>events">Events</a>
+    <?php if ( $this->model->isAdmin()) : ?>
+            <a href="<?php echo URL; ?>events/edit">Edit</a>
+    <?php endif; ?>
             <a href="<?php echo URL; ?>login/logout">Logout</a>
-            <a> Logged in as: <?php echo $_SESSION['Gebruikersnaam']; ?> </a>
     <?php endif; ?>
     </div>
 

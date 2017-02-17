@@ -1,53 +1,32 @@
 <?php
 
-    //session_start();
-    //print_r($_SESSION);
-
-/**
- * Class Home
- *
- * Please note:
- * Don't use the same name for class and method, as this might trigger an (unintended) __construct of the class.
- * This is really weird behaviour, but documented here: http://php.net/manual/en/language.oop5.decon.php
- *
- */
 class Home extends Controller
 {
-    /**
-     * PAGE: index
-     * This method handles what happens when you move to http://yourproject/home/index (which is the default page btw)
-     */
     public function index()
     {
-        // load views
-        require APP . 'Views/_templates/header.php';
-        require APP . 'Views/home/index.php';
-        require APP . 'Views/_templates/footer.php';
+        $_SESSION['errors']= [];
+        if ( $this->model->isLoggedInSession()==false ) 
+        {
+        // stuur direct door naar main pagina
+        $_SESSION['errors'][] = "U bent ingelogd!";
+        header('location: ' . URL . 'login/index');
+        } 
+        else 
+        {
+            require APP . 'Views/_templates/header.php';
+            require APP . 'Views/home/index.php';
+            require APP . 'Views/_templates/footer.php';
+        }
     }
 
-    /**
-     * PAGE: exampleone
-     * This method handles what happens when you move to http://yourproject/home/exampleone
-     * The camelCase writing is just for better readability. The method name is case-insensitive.
-     */
-    public function exampleOne()
+    public function about()
     {
-        // load views
-        require APP . 'Views/_templates/header.php';
-        require APP . 'Views/home/example_one.php';
-        require APP . 'Views/_templates/footer.php';
+        {
+            require APP . 'Views/_templates/header.php';
+            require APP . 'Views/home/about.php';
+            require APP . 'Views/_templates/footer.php';
+        }
     }
 
-    /**
-     * PAGE: exampletwo
-     * This method handles what happens when you move to http://yourproject/home/exampletwo
-     * The camelCase writing is just for better readability. The method name is case-insensitive.
-     */
-    public function exampleTwo()
-    {
-        // load views
-        require APP . 'Views/_templates/header.php';
-        require APP . 'Views/home/example_two.php';
-        require APP . 'Views/_templates/footer.php';
-    }
+
 }

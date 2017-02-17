@@ -1,5 +1,5 @@
 <div class="container">
-    <h2>You are in the View: application/view/login/index.php</h2>
+
     <div class="box">
         <h3>Log in</h3>
         <form action="<?php echo URL; ?>login/login_action" method="POST">
@@ -25,6 +25,9 @@
                   <input name="remember" type="checkbox" value="checked"> Onthoud mij <br>
                 <br>
                 <input type="submit" name="submit_login" value="Submit"/>
+                <br>
+                <br>
+                <a>Nog geen account? <a href="<?php echo URL; ?>register">Klik hier.</a>
             </div>
         </form>
     </div>

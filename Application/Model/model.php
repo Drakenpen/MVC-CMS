@@ -260,7 +260,7 @@ class Model
 
     public function getUserFromDB($email, $wachtwoord_verified)
     {
-        $sql = "SELECT id, gebruikersnaam, email FROM members 
+        $sql = "SELECT id, gebruikersnaam, email, isadmin, voornaam FROM members 
                 WHERE email = :email AND wachtwoord_hash = :wachtwoord_hash AND active=1 ;";
         $query = $this->db->prepare($sql);
         $query->execute(array(':email' => $email, 
@@ -273,6 +273,8 @@ class Model
                 $_SESSION['Id'] = $row['id'];
                 $_SESSION['Gebruikersnaam'] = $row['gebruikersnaam'];
                 $_SESSION['Email'] = $row['email'];
+                $_SESSION['isAdmin'] = $row['isadmin'];
+                $_SESSION['Voornaam'] = $row['voornaam'];
         }
         else
         {
@@ -335,7 +337,7 @@ class Model
         $query = $this->db->prepare($sql);
 
         $query->execute(array($activity_id, $user_id));
-        
+
         $sql = "INSERT INTO members_activities (activity_id, member_id) VALUES (?, ?)";
         $query = $this->db->prepare($sql);
         $query->execute(array($activity_id, $user_id));
@@ -343,5 +345,23 @@ class Model
 
     /** End event model
     */
-}
 
+
+    /** Admin model
+    */
+
+    public function isAdmin()
+    {
+        if (isset($_SESSION['isAdmin'])==false || empty($_SESSION['isAdmin']) ) {
+            return 0;
+        }
+        else
+        {
+            return 1;
+        }
+    }    
+
+
+    /** End Admin model
+    */
+}

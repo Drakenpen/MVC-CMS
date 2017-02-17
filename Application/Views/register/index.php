@@ -1,5 +1,4 @@
 <div class="container">
-    <h2>You are in the View: application/view/register/index.php</h2>
         <div class="box">
         <form action="<?php echo URL; ?>register/register_action" method="POST">
         <div>

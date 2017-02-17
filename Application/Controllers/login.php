@@ -5,10 +5,10 @@ class Login extends Controller
     public function index()
     {
     	$_SESSION['errors']= [];
-		if ( $this->model->IsLoggedInSession()==true ) 
+		if ( $this->model->isLoggedInSession()==true ) 
 		{
 		// stuur direct door naar main pagina
-	    $_SESSION['errors'][] = "U bent al ingelogd!";
+	    $_SESSION['errors'][] = "U bent ingelogd!";
 		header('location: ' . URL . 'home/index');
 		} 
 		else 

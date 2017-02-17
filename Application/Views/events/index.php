@@ -1,5 +1,8 @@
 <div class="container">
-    <h2>You are in the View: application/view/events/index.php</h2>
+
+		<div class="img" style='background-image'>
+			<p>Kies een event om een activiteit te selecteren!</p>
+        </div>  
 
     <?php foreach ($events as $event) { ?>
 	    <div class="box">
