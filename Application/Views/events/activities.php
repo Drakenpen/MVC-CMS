@@ -1,7 +1,7 @@
 <div class="container">
-
-		<h2>Kies een activiteit</h2>
-         
+<?php foreach ($events as $event) { ?>
+		<h2>Kies een activiteit voor "<?php if (isset($event->title)) echo htmlspecialchars($event->title, ENT_QUOTES, 'UTF-8'); ?>"</h2>
+<?php } ?>         
 <hr class="featurette-divider">
 
 	   <?php foreach ($activities as $activity) { ?>

@@ -41,13 +41,8 @@
                         <a href="<?php echo URL; ?>events/admin">Edit</a>
                     </li>
                     <?php endif; ?>
-                    <li class="dropdown">
-                        <a href="<?php echo URL; ?>login/logout" class="dropdown-toggle" data-toggle="dropdown">Account<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="<?php echo URL; ?>login/logout">Logout</a>
-                            </li>
-                        </ul>
+                    <li>
+                        <a href="<?php echo URL; ?>login/logout">Logout</a>
                     </li>
                     <?php endif; ?>
                 </ul>
