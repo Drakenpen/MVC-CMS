@@ -1,17 +1,22 @@
-    <div class="footer">
-        <a>Find me on GitHub: <a href="https://github.com/drakenpen">Drakenpen</a>.
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Find me on GitHub: <a href="https://github.com/drakenpen">Drakenpen</a>.</p>
+                </div>
+            </div>
+        </footer>
+
     </div>
+    <!-- /.container -->
 
-    <!-- jQuery, loaded in the recommended protocol-less way -->
-    <!-- more http://www.paulirish.com/2010/the-protocol-relative-url/ -->
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
 
-    <!-- define the project's URL (to make AJAX calls possible, even when using this in sub-folders etc) -->
-    <script>
-        var url = "<?php echo URL; ?>";
-    </script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
 
-    <!-- our JavaScript -->
-    <script src="<?php echo URL; ?>js/application.js"></script>
 </body>
+
 </html>

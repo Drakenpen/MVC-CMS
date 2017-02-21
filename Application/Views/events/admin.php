@@ -1,6 +1,7 @@
 <div class="container">
 <i>(work in progress)</i>
-        <h3>Add an event here:</h3>
+<hr class="featurette-divider">
+        <h3>Add an event here:</h3><br>
         <form action="<?php echo URL; ?>events/addevent" method="POST">
             <label>Title</label>
             <input type="text" name="title" value="" required />
@@ -12,11 +13,25 @@
             <input type="text" name="end_date" value="" />
             <input type="submit" name="submit_add_event" value="Submit" />
         </form>
-    <div class="box">
-    <h3><i>A total of <?php echo $amount_of_events; ?> events were found.</i></h3>
-    </div>
-    <div class="box">
-        <h3>List of events:</h3>
+        <br>
+        <div class="box">
+        <h3>Add an activity here:</h3><br>
+        <form action="<?php echo URL; ?>events/addevent" method="POST">
+            <label>Event</label>
+            <input type="text" name="event_id" value="" required />
+            <label>Title</label>
+            <input type="text" name="title" value="" required />
+            <label>Banner</label>
+            <input type="text" name="banner_url" value="" required />
+            <label>Description</label>
+            <input type="text" name="description" value="" />
+            <input type="submit" name="submit_add_activity" value="Submit" />
+        </form>
+        </div>
+
+    <hr class="featurette-divider">
+    <div class="featurette" id="events">
+        <h4><i>A total of <?php echo $amount_of_events; ?> events were found.</i></h4><br>
         <table>
             <thead style="background-color: #ddd; font-weight: bold;">
             <tr>
@@ -42,6 +57,38 @@
                 </tr>
             <?php } ?>
             </tbody>
+
+
         </table>
     </div>
-</div>
+<hr class="featurette-divider">
+   <div class="featurette" id="activities">
+        <h4><i>A total of <?php echo $amount_of_activities; ?> activities were found:</i></h4><br>
+        <table>
+            <thead style="background-color: #ddd; font-weight: bold;">
+            <tr>
+                <td>Event</td>
+                <td>Title</td>
+                <td>Banner</td>
+                <td>DELETE</td>
+                <td>EDIT</td>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($activities as $activity) { ?>
+                <tr>
+                    <td><?php if (isset($activity->event_id)) echo htmlspecialchars($activity->event_id, ENT_QUOTES, 'UTF-8'); ?></td>
+                    <td><?php if (isset($activity->title)) echo htmlspecialchars($activity->title, ENT_QUOTES, 'UTF-8'); ?></td>
+                    <td><?php if (isset($activity->banner_url)) echo htmlspecialchars($activity->banner_url, ENT_QUOTES, 'UTF-8'); ?></td>
+                    <td><a href="<?php echo URL . 'events/deleteActivity/' . htmlspecialchars($activity->id, ENT_QUOTES, 'UTF-8'); ?>">delete</a></td>
+                    <td><a href="<?php echo URL . 'events/editActivity/' . htmlspecialchars($activity->id, ENT_QUOTES, 'UTF-8'); ?>">edit</a></td>
+                </tr>
+            <?php } ?>
+            </tbody>
+
+
+
+        </table>
+    </div>
+
+<hr class="featurette-divider">

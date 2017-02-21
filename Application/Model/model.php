@@ -11,59 +11,6 @@ class Model
         }
     }
 
-    public function getAllSongs()
-    {
-        $sql = "SELECT id, artist, track, link FROM song";
-        $query = $this->db->prepare($sql);
-        $query->execute();
-
-        return $query->fetchAll();
-    }
-
-    public function addEvent($title, $large_banner_url, $start_date, $end_date)
-    {
-        $sql = "INSERT INTO events (title, large_banner_url, start_date, end_date) VALUES (:title, :large_banner_url,:start_date, :end_date)";
-        $query = $this->db->prepare($sql);
-        $parameters = array(':title' => $title, ':large_banner_url' => $large_banner_url, ':start_date' => $start_date, ':end_date' => $end_date);
-        $query->execute($parameters);
-    }
-
-    public function deleteEvent($event_id)
-    {
-        $sql = "DELETE FROM events WHERE id = :event_id";
-        $query = $this->db->prepare($sql);
-        $parameters = array(':event_id' => $event_id);
-        $query->execute($parameters);
-    }
-
-    public function getEvent($event_id)
-    {
-        $sql = "SELECT id, title, large_banner_url, start_date, end_date FROM events WHERE id = :event_id LIMIT 1";
-        $query = $this->db->prepare($sql);
-        $parameters = array(':event_id' => $event_id);
-        $query->execute($parameters);
-        
-        return $query->fetch();
-    }
-
-
-    public function updateEvent($title, $large_banner_url, $start_date, $end_date, $event_id)
-    {
-        $sql = "UPDATE events SET title = :title, large_banner_url = :large_banner_url, start_date = :start_date, end_date = :end_date WHERE id = :event_id";
-        $query = $this->db->prepare($sql);
-        $parameters = array(':title' => $title, ':large_banner_url' => $large_banner_url, ':start_date' => $start_date, ':end_date' => $end_date, ':event_id' => $event_id);
-        $query->execute($parameters);
-    }
-
-    public function amountEvents()
-    {
-        $sql = "SELECT COUNT(id) AS amount_of_events FROM events";
-        $query = $this->db->prepare($sql);
-        $query->execute();
-
-        return $query->fetch()->amount_of_events;
-    }
-
     /** Functional registration model
     */
 
@@ -225,9 +172,36 @@ class Model
     /** Event model
     */
 
+    public function amountEvents()
+    {
+        $sql = "SELECT COUNT(id) AS amount_of_events FROM events";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+
+        return $query->fetch()->amount_of_events;
+    }
+
+    public function amountActivities()
+    {
+        $sql = "SELECT COUNT(id) AS amount_of_activities FROM activities";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+
+        return $query->fetch()->amount_of_activities;
+    }
+
     public function loadEvents()
     {
         $sql = "SELECT * FROM events ORDER BY id ASC";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+
+        return $query->fetchAll();
+    }
+
+    public function loadActivities()
+    {
+        $sql = "SELECT * FROM activities ORDER BY id ASC";
         $query = $this->db->prepare($sql);
         $query->execute();
 
@@ -287,6 +261,9 @@ class Model
     /** Admin model
     */
 
+    /** Edit Event model 
+    **/
+
     public function isAdmin()
     {
         if (isset($_SESSION['isAdmin'])==false || empty($_SESSION['isAdmin']) ) {
@@ -296,15 +273,84 @@ class Model
         {
             return 1;
         }
-    }    
+    }   
 
-    public function deleteEvents($event_id)
+    public function addEvent($title, $large_banner_url, $start_date, $end_date)
+    {
+        $sql = "INSERT INTO events (title, large_banner_url, start_date, end_date) VALUES (:title, :large_banner_url,:start_date, :end_date)";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':title' => $title, ':large_banner_url' => $large_banner_url, ':start_date' => $start_date, ':end_date' => $end_date);
+        $query->execute($parameters);
+    }
+
+    public function deleteEvent($event_id)
     {
         $sql = "DELETE FROM events WHERE id = :event_id";
         $query = $this->db->prepare($sql);
         $parameters = array(':event_id' => $event_id);
         $query->execute($parameters);
     }
+
+    public function getEvent($event_id)
+    {
+        $sql = "SELECT id, title, large_banner_url, start_date, end_date FROM events WHERE id = :event_id LIMIT 1";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':event_id' => $event_id);
+        $query->execute($parameters);
+
+        return $query->fetch();
+    }
+
+    public function updateEvent($title, $large_banner_url, $start_date, $end_date, $event_id)
+    {
+        $sql = "UPDATE events SET title = :title, large_banner_url = :large_banner_url, start_date = :start_date, end_date = :end_date WHERE id = :event_id";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':title' => $title, ':large_banner_url' => $large_banner_url, ':start_date' => $start_date, ':end_date' => $end_date, ':event_id' => $event_id);
+        $query->execute($parameters);
+    }
+
+    /** End Edit event model 
+    **/
+
+    /** Edit Activity model 
+    **/
+
+    public function addActivity($event_id, $title, $banner_url,  $description)
+    {
+        $sql = "INSERT INTO events (event_id, title, banner_url, description) VALUES (:event_id, :title, :banner_url,  :description)";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':event_id' => $event_id, ':title' => $title, ':description' => $description);
+        $query->execute($parameters);
+    }
+
+    public function deleteActivity($activity_id)
+    {
+        $sql = "DELETE FROM activities WHERE id = :activity_id";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':activity_id' => $activity_id);
+        $query->execute($parameters);
+    }
+
+    public function getActivity($activity_id)
+    {
+        $sql = "SELECT id, event_id, title, banner_url, description FROM activities WHERE id = :activity_id LIMIT 1";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':activity_id' => $activity_id);
+        $query->execute($parameters);
+
+        return $query->fetch();
+    }
+
+    public function updateActivity($event_id, $title, $banner_url, $description)
+    {
+        $sql = "UPDATE activities SET event_id = :event_id, title = :title, banner_url = :banner_url, description = :description WHERE id = :activity_id";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':event_id' => $event_id, ':title' => $title, ':description' => $description, ':activity_id' => $activity_id);
+        $query->execute($parameters);
+    }
+
+    /** End Edit activity model 
+    **/
 
     /** End Admin model
     */

@@ -34,7 +34,7 @@ class events extends Controller
     {
          $this->model->selectActivity();
 
-        header('location: ' . URL . 'home/index');
+        header('location: ' . URL . 'events/index');
     }
 
     public function Admin()
@@ -48,7 +48,9 @@ class events extends Controller
         else 
         {
             $amount_of_events = $this->model->amountEvents();
+            $amount_of_activities = $this->model->amountActivities();
             $events = $this->model->loadEvents();
+            $activities = $this->model->loadActivities();
 
             require APP . 'Views/_templates/header.php';
             require APP . 'Views/events/admin.php';
@@ -121,5 +123,74 @@ class events extends Controller
         }
         header('location: ' . URL . 'events/admin');
     }
+
+/** Activity controller **/
+
+    public function addActivity()
+    {
+        $_SESSION['errors']= [];
+        if ( $this->model->isAdmin()==false ) 
+        {
+        $_SESSION['errors'][] = "U heeft geen admin rechten!";
+        header('location: ' . URL . 'home/index');
+        } 
+        else 
+        {
+        if (isset($_POST["submit_add_activity"])) {
+            $this->model->addActivity($_POST["event_id"], $_POST["title"], $_POST["banner_url"],  $_POST["description"]);
+            }
+        } 
+        header('location: ' . URL . 'events/admin');
+    }
+
+    public function deleteActivity($activity_id)
+    {
+        $_SESSION['errors']= [];
+        if ( $this->model->isAdmin()==false ) 
+        {
+        $_SESSION['errors'][] = "U heeft geen admin rechten!";
+        header('location: ' . URL . 'home/index');
+        } 
+        else 
+        {
+        if (isset($activity_id)) {
+            $this->model->deleteActivity($event_id);
+        }
+            header('location: ' . URL . 'events/admin');
+        }
+    }
+
+    public function editActivity($activity_id)
+    {
+        $_SESSION['errors']= [];
+        if ( $this->model->isAdmin()==false ) 
+        {
+        $_SESSION['errors'][] = "U heeft geen admin rechten!";
+        header('location: ' . URL . 'home/index');
+        } 
+        else 
+        {
+        if (isset($activity_id)) {
+            $activity = $this->model->getActivity($activity_id);
+
+            require APP . 'Views/_templates/header.php';
+            require APP . 'Views/events/edit_activity.php';
+            require APP . 'Views/_templates/footer.php';
+        } 
+        else 
+            {
+            header('location: ' . URL . 'events/index');
+            }
+        }
+    }
+    
+    public function updateActivity()
+    {
+        if (isset($_POST["submit_update_activity"])) {
+            $this->model->updateActivity($_POST["event_id"], $_POST["title"], $_POST["banner_url"],  $_POST["description"], $_POST['activity_id']);
+        }
+        header('location: ' . URL . 'events/admin');
+    }
+/** end activity controller**/
 
 }

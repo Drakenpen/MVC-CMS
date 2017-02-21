@@ -1,6 +1,6 @@
 <div class="container">
-    <h3>Log in</h3>
-    <div class="box">
+<hr class="featurette-divider">
+    <div class="form">
         <form action="<?php echo URL; ?>login/login_action" method="POST">
             <div>
                 <div>
@@ -23,11 +23,12 @@
                 <br>
                   <input name="remember" type="checkbox" value="checked"> Onthoud mij <br>
                 <br>
-                <input type="submit" name="submit_login" value="Submit"/>
+                <input type="submit" name="submit_login" value="Submit" class="btn"/>
                 <br>
                 <br>
-                <a>Nog geen account? <a href="<?php echo URL; ?>register">Klik hier.</a>
+                <p>Nog geen account? <a href="<?php echo URL; ?>register">Klik hier.</a> <p>
             </div>
         </form>
     </div>
-</div>
+
+<hr class="featurette-divider">

@@ -10,7 +10,7 @@
             <input type="text" name="start_date" value="<?php echo htmlspecialchars($event->start_date, ENT_QUOTES, 'UTF-8'); ?>" required />
             <label>End</label>
             <input type="text" name="end_date" value="<?php echo htmlspecialchars($event->end_date, ENT_QUOTES, 'UTF-8'); ?>" />
-            <input type="hidden" name="event_id" value="<?php echo htmlspecialchars($event->id, ENT_QUOTES, 'UTF-8'); ?>" />
+            <input type="hidden" name="eventid" value="<?php echo htmlspecialchars($event->id, ENT_QUOTES, 'UTF-8'); ?>" />
             <input type="submit" name="submit_update_event" value="Update" />
         </form>
     </div>

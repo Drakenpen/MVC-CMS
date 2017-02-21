@@ -1,11 +1,10 @@
 <div class="container">
+		<h2>Kies een event om een activiteit te selecteren</h2>
 
-		<div class="img" style='background-image'>
-			<h3>Kies een event om een activiteit te selecteren</h3>
-        </div>  
+<hr class="featurette-divider">
 
     <?php foreach ($events as $event) { ?>
-	    <div class="box">
+	    <div class="featurette">
 	    	<?php if (isset($event->id)) { ?>
 	    	<a href="<?php echo URL; ?>events/activities?id=<?php echo ($event->id); ?>">
 	    	<?php } ?>
@@ -19,4 +18,7 @@
 	        </a>
 	    </div>
 	<?php } ?>
-</div>
+
+<hr class="featurette-divider">
+
+
