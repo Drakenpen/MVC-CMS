@@ -1,4 +1,5 @@
 <div class="container">
+<hr class="featurette-divider">
     <div>
         <h3>Edit an activity</h3>
         <form action="<?php echo URL; ?>events/updateactivity" method="POST">
@@ -14,4 +15,5 @@
             <input type="submit" name="submit_update_activity" value="Update" />
         </form>
     </div>
-</div>
+
+<hr class="featurette-divider">

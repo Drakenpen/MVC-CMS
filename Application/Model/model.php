@@ -317,9 +317,9 @@ class Model
 
     public function addActivity($event_id, $title, $banner_url,  $description)
     {
-        $sql = "INSERT INTO events (event_id, title, banner_url, description) VALUES (:event_id, :title, :banner_url,  :description)";
+        $sql = "INSERT INTO activities (event_id, title, banner_url, description) VALUES (:event_id, :title, :banner_url,  :description)";
         $query = $this->db->prepare($sql);
-        $parameters = array(':event_id' => $event_id, ':title' => $title, ':description' => $description);
+        $parameters = array(':event_id' => $event_id, ':title' => $title, ':banner_url' => $banner_url, ':description' => $description);
         $query->execute($parameters);
     }
 
@@ -341,13 +341,14 @@ class Model
         return $query->fetch();
     }
 
-    public function updateActivity($event_id, $title, $banner_url, $description)
+    public function updateActivity($event_id, $title, $banner_url, $description, $activity_id)
     {
         $sql = "UPDATE activities SET event_id = :event_id, title = :title, banner_url = :banner_url, description = :description WHERE id = :activity_id";
         $query = $this->db->prepare($sql);
-        $parameters = array(':event_id' => $event_id, ':title' => $title, ':description' => $description, ':activity_id' => $activity_id);
+        $parameters = array(':event_id' => $event_id, ':title' => $title, ':banner_url' => $banner_url, ':description' => $description, ':activity_id' => $activity_id);
         $query->execute($parameters);
     }
+
 
     /** End Edit activity model 
     **/

@@ -18,7 +18,7 @@
                 </div>
                 <br>
                 <div>       
-                    <a href="password_forget.php">Wachtwoord vergeten?</a>
+                    <a href="<?php echo URL; ?>problem/index" onclick="return confirm('Oeps. Deze functie bestaat nog niet.')" ">Wachtwoord vergeten?</a>
                 </div>
                 <br>
                   <input name="remember" type="checkbox" value="checked"> Onthoud mij <br>
