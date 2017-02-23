@@ -261,8 +261,8 @@ class Model
     /** Admin model
     */
 
-    /** Edit Event model 
-    **/
+        /** Edit Event model 
+        **/
 
     public function isAdmin()
     {
@@ -309,11 +309,11 @@ class Model
         $query->execute($parameters);
     }
 
-    /** End Edit event model 
-    **/
+        /** End Edit event model 
+        **/
 
-    /** Edit Activity model 
-    **/
+        /** Edit Activity model 
+        **/
 
     public function addActivity($event_id, $title, $banner_url,  $description)
     {
@@ -350,8 +350,8 @@ class Model
     }
 
 
-    /** End Edit activity model 
-    **/
+        /** End Edit activity model 
+        **/
 
     /** End Admin model
     */

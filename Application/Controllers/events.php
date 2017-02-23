@@ -154,7 +154,7 @@ class events extends Controller
         else 
         {
         if (isset($activity_id)) {
-            $this->model->deleteActivity($event_id);
+            $this->model->deleteActivity($activity_id);
         }
             header('location: ' . URL . 'events/admin');
         }

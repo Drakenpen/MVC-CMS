@@ -1,4 +1,5 @@
 <div class="container">
+<h2>Log in om je in te schrijven voor evenementen.</h2>
 <hr class="featurette-divider">
     <div class="form">
         <form action="<?php echo URL; ?>login/login_action" method="POST">

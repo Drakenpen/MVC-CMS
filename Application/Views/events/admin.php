@@ -10,22 +10,29 @@
             <label>Starts</label>
             <input type="text" name="start_date" value="" required />
             <label>Ends</label>
-            <input type="text" name="end_date" value="" />
-            <input type="submit" name="submit_add_event" value="Submit" />
+            <input type="text" name="end_date" value="" /><br><br>
+            <input type="submit" name="submit_add_event" value="Submit" class="btn btn-info"/>
         </form>
         <br>
         <div class="box">
         <h3>Add an activity here:</h3><br>
         <form action="<?php echo URL; ?>events/addactivity" method="POST">
-            <label>Event</label>
-            <input type="text" name="event_id" value="" required />
+     
+            
+           <label>Event</label>
+                <select name="event_id" value="" required>
+                <?php foreach ($events as $event) { ?>
+                  <option value="<?php if (isset($event->id)) echo htmlspecialchars($event->id, ENT_QUOTES, 'UTF-8'); ?>"><?php if (isset($event->id)) echo htmlspecialchars($event->title, ENT_QUOTES, 'UTF-8'); ?></option>
+                  <?php } ?>
+                </select>
+                            
             <label>Title</label>
             <input type="text" name="title" value="" required />
             <label>Banner</label>
             <input type="text" name="banner_url" value="" required />
             <label>Description</label>
-            <input type="text" name="description" value="" />
-            <input type="submit" name="submit_add_activity" value="Submit" />
+            <input type="text" name="description" value="" /><br><br>
+            <input type="submit" name="submit_add_activity" value="Submit" class="btn btn-info"/>
         </form>
         </div>
 
